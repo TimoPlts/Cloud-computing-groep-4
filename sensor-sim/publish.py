@@ -3,8 +3,6 @@ import paho.mqtt.client as mqtt
 
 host = os.getenv("MQTT_HOST", "localhost")
 port = int(os.getenv("MQTT_PORT", "1883"))
-user = os.getenv("MQTT_USER", "")
-pw   = os.getenv("MQTT_PASS", "")
 
 
 def on_connect(client, userdata, flags, rc, properties=None): # Callback wordt opgeroepen als client met broker verbindt
