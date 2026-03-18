@@ -38,6 +38,21 @@
         "sessionExpiry": ""
     },
     {
+        "id": "11505478e630e006",
+        "type": "influxdb",
+        "hostname": "http://host.docker.internal:8086",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "db1",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
         "id": "1a26cd779f1b8368",
         "type": "comment",
         "z": "26a9f967bed0982b",
@@ -117,7 +132,8 @@
         "y": 280,
         "wires": [
             [
-                "23b6917fea31633a"
+                "23b6917fea31633a",
+                "f6310c5fcdefec0b"
             ]
         ]
     },
@@ -174,7 +190,8 @@
         "y": 380,
         "wires": [
             [
-                "176e5bd7adb43b87"
+                "176e5bd7adb43b87",
+                "3fcc61e3d31944b6"
             ]
         ]
     },
@@ -191,8 +208,52 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 820,
-        "y": 400,
+        "x": 800,
+        "y": 440,
         "wires": []
+    },
+    {
+        "id": "f6310c5fcdefec0b",
+        "type": "influxdb out",
+        "z": "26a9f967bed0982b",
+        "influxdb": "11505478e630e006",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "groep4",
+        "bucket": "sensordata",
+        "x": 940,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3fcc61e3d31944b6",
+        "type": "influxdb out",
+        "z": "26a9f967bed0982b",
+        "influxdb": "11505478e630e006",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "groep4",
+        "bucket": "sensordata",
+        "x": 880,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "fddeb37a33135ca5",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
     }
 ]
