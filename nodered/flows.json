@@ -1,0 +1,198 @@
+[
+    {
+        "id": "26a9f967bed0982b",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6245685950cc44ca",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "host.docker.internal",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "1a26cd779f1b8368",
+        "type": "comment",
+        "z": "26a9f967bed0982b",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9de3435deeb43531",
+        "type": "mqtt in",
+        "z": "26a9f967bed0982b",
+        "name": "",
+        "topic": "controller/joystick",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "6245685950cc44ca",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 220,
+        "wires": [
+            [
+                "44f1d2f81c77e1ae"
+            ]
+        ]
+    },
+    {
+        "id": "23b6917fea31633a",
+        "type": "debug",
+        "z": "26a9f967bed0982b",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "44f1d2f81c77e1ae",
+        "type": "json",
+        "z": "26a9f967bed0982b",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "43c7f4ea0d8efe52"
+            ]
+        ]
+    },
+    {
+        "id": "43c7f4ea0d8efe52",
+        "type": "function",
+        "z": "26a9f967bed0982b",
+        "name": "validate joystick",
+        "func": "let x = msg.payload.x;\nlet y = msg.payload.y;\n\n// controleer of waarde geldig is\nif (x < 0 || x > 1023 || y < 0 || y > 1023) {\n    return null;\n}\n\n// voorbeeld berekening\nlet magnitude = Math.sqrt(x*x + y*y);\n\nmsg.payload = {\n    x: x,\n    y: y,\n    magnitude: magnitude\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "23b6917fea31633a"
+            ]
+        ]
+    },
+    {
+        "id": "2e371e1680dc9b39",
+        "type": "mqtt in",
+        "z": "26a9f967bed0982b",
+        "name": "",
+        "topic": "controller/button",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "6245685950cc44ca",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "d56eae928c45c736"
+            ]
+        ]
+    },
+    {
+        "id": "d56eae928c45c736",
+        "type": "json",
+        "z": "26a9f967bed0982b",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "05a01399392d9271"
+            ]
+        ]
+    },
+    {
+        "id": "05a01399392d9271",
+        "type": "function",
+        "z": "26a9f967bed0982b",
+        "name": "validatie",
+        "func": "let a = msg.payload.a;\nlet b = msg.payload.b;\n\n// enkel 0 of 1 is geldig\nif (![0,1].includes(a) || ![0,1].includes(b)) {\n    return null;\n}\n\nmsg.payload = {\n    buttonA: a,\n    buttonB: b\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 380,
+        "wires": [
+            [
+                "176e5bd7adb43b87"
+            ]
+        ]
+    },
+    {
+        "id": "176e5bd7adb43b87",
+        "type": "debug",
+        "z": "26a9f967bed0982b",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 400,
+        "wires": []
+    }
+]
