@@ -1,0 +1,54 @@
+services:
+  influxdb:
+    image: influxdb:2.7
+    restart: unless-stopped
+    ports: "${INFLUXDB_PORT:-8086}:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: bomba888
+      DOCKER_INFLUXDB_INIT_ORG: groep4
+      DOCKER_INFLUXDB_INIT_BUCKET: sensordata
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    networks:
+      - cloudnet
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    ports: 
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - cloudnet
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered/data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - influxdb
+    networks:
+      - cloudnet
+
+networks:
+  cloudnet:
+    driver: bridge
+
+volumes: 
+  influxdb-data:
+  portainer_data:
+
+
+        
+
+    
