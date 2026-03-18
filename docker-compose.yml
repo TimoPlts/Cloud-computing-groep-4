@@ -27,7 +27,7 @@ services:
     networks:
       - cloudnet
   nodered:
-    image: nodered/node-red:latest
+    build: ./nodered
     container_name: nodered
     restart: unless-stopped
     ports:
@@ -36,6 +36,8 @@ services:
       FLOWS: flows.json
     volumes:
       - nodered-data:/data
+      - ./nodered/flows.json:/data/flows.json
+      - ./nodered/lib:/data/lib
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
