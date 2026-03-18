@@ -35,7 +35,8 @@ services:
     environment:
       FLOWS: flows.json
     volumes:
-      - ./nodered:/data
+      - nodered-data:/data
+      - ./nodered/flows.json:/data/flows.json
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
@@ -60,5 +61,5 @@ networks:
 
 volumes: 
   influxdb-data:
+  nodered-data:
   portainer_data:
-  
