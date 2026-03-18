@@ -36,7 +36,6 @@ services:
       FLOWS: flows.json
     volumes:
       - nodered-data:/data
-      - ./nodered/flows.json:/data/flows.json
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:

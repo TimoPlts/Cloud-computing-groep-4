@@ -1,5 +1,12 @@
 [
     {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "26a9f967bed0982b",
         "type": "tab",
         "label": "Flow 1",
@@ -38,14 +45,6 @@
         "sessionExpiry": ""
     },
     {
-        "id": "fddeb37a33135ca5",
-        "type": "global-config",
-        "env": [],
-        "modules": {
-            "node-red-contrib-influxdb": "0.7.0"
-        }
-    },
-    {
         "id": "11505478e630e006",
         "type": "influxdb",
         "hostname": "http://host.docker.internal:8086",
@@ -56,9 +55,19 @@
         "usetls": false,
         "tls": "",
         "influxdbVersion": "2.0",
-        "url": "http://localhost:8086",
+        "url": "http://host.docker.internal:8086",
         "timeout": 10,
         "rejectUnauthorized": true
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
     },
     {
         "id": "1a26cd779f1b8368",
@@ -104,8 +113,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 880,
-        "y": 320,
+        "x": 1240,
+        "y": 360,
         "wires": []
     },
     {
@@ -140,7 +149,7 @@
         "y": 280,
         "wires": [
             [
-                "29ec377ecc6f7acb",
+                "c26062cad1606074",
                 "23b6917fea31633a"
             ]
         ]
@@ -198,8 +207,8 @@
         "y": 380,
         "wires": [
             [
-                "19d84614159462cc",
-                "176e5bd7adb43b87"
+                "176e5bd7adb43b87",
+                "f7b10f0ae1791250"
             ]
         ]
     },
@@ -226,15 +235,15 @@
         "z": "26a9f967bed0982b",
         "influxdb": "11505478e630e006",
         "name": "",
-        "measurement": "",
+        "measurement": "joystick",
         "precision": "",
         "retentionPolicy": "",
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
-        "org": "organisation",
-        "bucket": "bucket",
-        "x": 1040,
+        "org": "groep4",
+        "bucket": "sensordata",
+        "x": 1070,
         "y": 260,
         "wires": []
     },
@@ -244,56 +253,24 @@
         "z": "26a9f967bed0982b",
         "influxdb": "11505478e630e006",
         "name": "",
-        "measurement": "",
+        "measurement": "button",
         "precision": "",
         "retentionPolicy": "",
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
-        "org": "organisation",
-        "bucket": "bucket",
-        "x": 1120,
+        "org": "groep4",
+        "bucket": "sensordata",
+        "x": 1150,
         "y": 460,
         "wires": []
     },
     {
-        "id": "29ec377ecc6f7acb",
-        "type": "function",
-        "z": "26a9f967bed0982b",
-        "name": "measurement",
-        "func": "msg.measurement = \"controller\";\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 940,
-        "y": 220,
-        "wires": [
-            [
-                "c26062cad1606074"
-            ]
-        ]
-    },
-    {
-        "id": "19d84614159462cc",
-        "type": "function",
-        "z": "26a9f967bed0982b",
-        "name": "measurement",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 900,
-        "y": 400,
-        "wires": [
-            [
-                "f7b10f0ae1791250"
-            ]
-        ]
+        "id": "805e18a8e11035f6",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
     }
 ]
