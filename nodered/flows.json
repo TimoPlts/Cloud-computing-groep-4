@@ -38,6 +38,14 @@
         "sessionExpiry": ""
     },
     {
+        "id": "fddeb37a33135ca5",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    },
+    {
         "id": "11505478e630e006",
         "type": "influxdb",
         "hostname": "http://host.docker.internal:8086",
@@ -132,8 +140,8 @@
         "y": 280,
         "wires": [
             [
-                "23b6917fea31633a",
-                "f6310c5fcdefec0b"
+                "29ec377ecc6f7acb",
+                "23b6917fea31633a"
             ]
         ]
     },
@@ -190,8 +198,8 @@
         "y": 380,
         "wires": [
             [
-                "176e5bd7adb43b87",
-                "3fcc61e3d31944b6"
+                "19d84614159462cc",
+                "176e5bd7adb43b87"
             ]
         ]
     },
@@ -213,7 +221,7 @@
         "wires": []
     },
     {
-        "id": "f6310c5fcdefec0b",
+        "id": "c26062cad1606074",
         "type": "influxdb out",
         "z": "26a9f967bed0982b",
         "influxdb": "11505478e630e006",
@@ -224,14 +232,14 @@
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
-        "org": "groep4",
-        "bucket": "sensordata",
-        "x": 940,
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1040,
         "y": 260,
         "wires": []
     },
     {
-        "id": "3fcc61e3d31944b6",
+        "id": "f7b10f0ae1791250",
         "type": "influxdb out",
         "z": "26a9f967bed0982b",
         "influxdb": "11505478e630e006",
@@ -242,18 +250,50 @@
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
-        "org": "groep4",
-        "bucket": "sensordata",
-        "x": 880,
-        "y": 380,
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1120,
+        "y": 460,
         "wires": []
     },
     {
-        "id": "fddeb37a33135ca5",
-        "type": "global-config",
-        "env": [],
-        "modules": {
-            "node-red-contrib-influxdb": "0.7.0"
-        }
+        "id": "29ec377ecc6f7acb",
+        "type": "function",
+        "z": "26a9f967bed0982b",
+        "name": "measurement",
+        "func": "msg.measurement = \"controller\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 220,
+        "wires": [
+            [
+                "c26062cad1606074"
+            ]
+        ]
+    },
+    {
+        "id": "19d84614159462cc",
+        "type": "function",
+        "z": "26a9f967bed0982b",
+        "name": "measurement",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 400,
+        "wires": [
+            [
+                "f7b10f0ae1791250"
+            ]
+        ]
     }
 ]
