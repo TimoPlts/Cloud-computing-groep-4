@@ -2,7 +2,8 @@ services:
   influxdb:
     image: influxdb:2.7
     restart: unless-stopped
-    ports: "${INFLUXDB_PORT:-8086}:8086"
+    ports:
+      - "${INFLUXDB_PORT:-8086}:8086"
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: admin
@@ -31,12 +32,25 @@ services:
     restart: unless-stopped
     ports:
       - "1880:1880"
+    environment:
+      FLOWS: flows.json
     volumes:
-      - ./nodered/data:/data
+      - ./nodered:/data
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
       - influxdb
+    networks:
+      - cloudnet
+
+  sensor-sim:
+    build: ./sensor-sim
+    restart: unless-stopped
+    environment:
+      MQTT_HOST: host.docker.internal
+      MQTT_PORT: 1883
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - cloudnet
 
@@ -47,8 +61,4 @@ networks:
 volumes: 
   influxdb-data:
   portainer_data:
-
-
-        
-
-    
+  
