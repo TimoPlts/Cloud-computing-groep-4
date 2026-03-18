@@ -37,8 +37,6 @@ services:
       NODE_RED_CREDENTIAL_SECRET: "mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ=="
     volumes:
       - nodered-data:/data
-      - ./nodered/flows.json:/data/flows.json
-      - ./nodered/lib:/data/lib
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
