@@ -2,17 +2,10 @@
     {
         "id": "f6f2187d.f17ca8",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Data verwerking",
         "disabled": false,
         "info": ""
-    },
-    {
-        "id": "26a9f967bed0982b",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": ""
-    },
+    },  
     {
         "id": "6245685950cc44ca",
         "type": "mqtt-broker",
