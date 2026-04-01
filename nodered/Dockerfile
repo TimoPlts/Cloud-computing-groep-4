@@ -6,6 +6,7 @@ COPY --chown=node-red:node-red flows.json /opt/nodered-seed/flows.json
 COPY --chown=node-red:node-red lib /opt/nodered-seed/lib
 COPY --chown=node-red:node-red entrypoint.sh /opt/nodered-seed/entrypoint.sh
 
-RUN chmod +x /opt/nodered-seed/entrypoint.sh
+RUN sed -i 's/\r$//' /opt/nodered-seed/entrypoint.sh \
+ && chmod +x /opt/nodered-seed/entrypoint.sh
 
 ENTRYPOINT ["/opt/nodered-seed/entrypoint.sh"]
