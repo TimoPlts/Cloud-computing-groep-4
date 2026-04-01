@@ -5,8 +5,10 @@ mkdir -p /data/lib
 
 SETTINGS_FILE=/data/settings.js
 DEFAULT_SETTINGS_FILE=/usr/src/node-red/node_modules/node-red/settings.js
+# Set NODE_RED_FORCE_SEED=true to always sync repository flows/lib into /data at startup.
+force_seed="${NODE_RED_FORCE_SEED:-false}"
 
-if [ ! -f /data/flows.json ]; then
+if [ "$force_seed" = "true" ] || [ ! -f /data/flows.json ]; then
   cp /opt/nodered-seed/flows.json /data/flows.json
 fi
 
