@@ -10,8 +10,10 @@ if [ ! -f /data/flows.json ]; then
   cp /opt/nodered-seed/flows.json /data/flows.json
 fi
 
-if [ -d /opt/nodered-seed/lib ] && [ ! -e /data/lib/secretKey.js ]; then
-  cp -R /opt/nodered-seed/lib/. /data/lib/
+if [ -d /opt/nodered-seed/lib ]; then
+  if [ "$force_seed" = "true" ] || [ ! -e /data/lib/secretKey.js ]; then
+    cp -R /opt/nodered-seed/lib/. /data/lib/
+  fi
 fi
 
 if [ ! -f "$SETTINGS_FILE" ] && [ -f "$DEFAULT_SETTINGS_FILE" ]; then
