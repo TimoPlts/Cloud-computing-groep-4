@@ -131,7 +131,7 @@
         "type": "function",
         "z": "26a9f967bed0982b",
         "name": "validate joystick",
-        "func": "let x = msg.payload.x;\nlet y = msg.payload.y;\n\n// controleer of waarde geldig is\nif (x < 0 || x > 1023 || y < 0 || y > 1023) {\n    return null;\n}\n\n// voorbeeld berekening\nlet magnitude = Math.sqrt(x*x + y*y);\n\nmsg.payload = {\n    x: x,\n    y: y,\n    magnitude: magnitude\n};\n\nreturn msg;",
+        "func": "let x = msg.payload.x;\nlet y = msg.payload.y;\n\n// controleer of waarde geldig is\nif (x < 0 || x > 1023 || y < 0 || y > 1023) {\n    node.warn(`Ongeldige joystick data gedropt: x=${x}, y=${y}`);\n    return null;\n}\n\n// voorbeeld berekening\nlet magnitude = Math.sqrt(x*x + y*y);\n\nmsg.payload = {\n    x: x,\n    y: y,\n    magnitude: magnitude\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -189,7 +189,7 @@
         "type": "function",
         "z": "26a9f967bed0982b",
         "name": "validatie",
-        "func": "let a = msg.payload.a;\nlet b = msg.payload.b;\n\n// enkel 0 of 1 is geldig\nif (![0,1].includes(a) || ![0,1].includes(b)) {\n    return null;\n}\n\nmsg.payload = {\n    buttonA: a,\n    buttonB: b\n};\n\nreturn msg;",
+        "func": "let a = msg.payload.a;\nlet b = msg.payload.b;\n\n// enkel 0 of 1 is geldig\nif (![0,1].includes(a) || ![0,1].includes(b)) {\n    node.warn(`Ongeldige button data gedropt: a=${a}, b=${b}`);\n    return null;\n}\n\nmsg.payload = {\n    buttonA: a,\n    buttonB: b\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -256,6 +256,69 @@
         "bucket": "sensordata",
         "x": 1150,
         "y": 460,
+        "wires": []
+    },
+    {
+        "id": "3d2be9a91d8d4bc1",
+        "type": "catch",
+        "z": "26a9f967bed0982b",
+        "name": "Catch fouten",
+        "scope": null,
+        "uncaught": false,
+        "x": 290,
+        "y": 520,
+        "wires": [
+            [
+                "48d90db2cc9947f7"
+            ]
+        ]
+    },
+    {
+        "id": "0be95fe0a4f74f4f",
+        "type": "status",
+        "z": "26a9f967bed0982b",
+        "name": "Status nodes",
+        "scope": null,
+        "x": 290,
+        "y": 580,
+        "wires": [
+            [
+                "f57fdcaed0544478"
+            ]
+        ]
+    },
+    {
+        "id": "48d90db2cc9947f7",
+        "type": "debug",
+        "z": "26a9f967bed0982b",
+        "name": "error events",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 540,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "f57fdcaed0544478",
+        "type": "debug",
+        "z": "26a9f967bed0982b",
+        "name": "status events",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "status.text",
+        "statusType": "msg",
+        "x": 550,
+        "y": 580,
         "wires": []
     },
     {
