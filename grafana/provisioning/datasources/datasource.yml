@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB-sensordata
+    uid: influxdb-sensordata
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    isDefault: true
+    jsonData:
+      version: Flux
+      organization: groep4
+      defaultBucket: sensordata
+      tlsSkipVerify: true
+    secureJsonData:
+      token: mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==

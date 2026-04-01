@@ -26,6 +26,25 @@ services:
       - portainer_data:/data
     networks:
       - cloudnet
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: bomba888
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - influxdb
+    networks:
+      - cloudnet
+
   nodered:
     build: ./nodered
     container_name: nodered
@@ -63,3 +82,4 @@ volumes:
   influxdb-data:
   nodered-data:
   portainer_data:
+  grafana-data:
