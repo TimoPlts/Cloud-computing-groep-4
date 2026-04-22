@@ -10,7 +10,7 @@
         "id": "6245685950cc44ca",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "host.docker.internal",
+        "broker": "mosquitto",
         "port": 1883,
         "clientid": "",
         "autoConnect": true,
@@ -40,7 +40,7 @@
     {
         "id": "11505478e630e006",
         "type": "influxdb",
-        "hostname": "http://host.docker.internal:8086",
+        "hostname": "http://influxdb:8086",
         "port": 8086,
         "protocol": "http",
         "database": "database",
@@ -48,7 +48,7 @@
         "usetls": false,
         "tls": "",
         "influxdbVersion": "2.0",
-        "url": "http://host.docker.internal:8086",
+        "url": "http://influxdb:8086",
         "timeout": 10,
         "rejectUnauthorized": true
     },

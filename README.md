@@ -1,6 +1,29 @@
 # Cloud-computing-groep-4
 
-## andere info......
+## Basisstack
+
+De basis draait volledig via Docker Compose:
+
+- Mosquitto: MQTT-broker op `localhost:1883`
+- Sensor simulator: publiceert joystick- en buttondata naar Mosquitto
+- Node-RED: leest MQTT-data, valideert ze en schrijft correcte metingen naar InfluxDB
+- InfluxDB: tijdreeksdatabase voor de meetwaarden
+- Grafana: dashboard op `http://localhost:3000`
+- Portainer: containerbeheer op `http://localhost:9000`
+
+Binnen het Docker-netwerk gebruiken containers de servicenaam `mosquitto` als MQTT-host. Vanaf de hostmachine kan je de broker bereiken via `localhost:1883`.
+
+Start de stack:
+
+```bash
+docker compose up -d --build
+```
+
+Heruitrollen via het deployscript:
+
+```bash
+./scripts/deploy.sh
+```
 
 ## Bonus: Volume backup script
 

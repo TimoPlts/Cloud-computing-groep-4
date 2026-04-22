@@ -1,4 +1,14 @@
 services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:ro
+    networks:
+      - cloudnet
+
   influxdb:
     image: influxdb:2.7
     restart: unless-stopped
@@ -53,9 +63,8 @@ services:
       - "1880:1880"
     volumes:
       - nodered-data:/data
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
+      - mosquitto
       - influxdb
     networks:
       - cloudnet
@@ -64,10 +73,10 @@ services:
     build: ./sensor-sim
     restart: unless-stopped
     environment:
-      MQTT_HOST: host.docker.internal
+      MQTT_HOST: mosquitto
       MQTT_PORT: 1883
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mosquitto
     networks:
       - cloudnet
 
