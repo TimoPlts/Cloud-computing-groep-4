@@ -27,6 +27,57 @@ Heruitrollen via het deployscript:
 ./scripts/deploy.sh
 ```
 
+## Automatische deploy op de VM
+
+Voor automatische uitrol zonder GitHub SSH-toegang bevat deze repo nu een lokale VM-opzet:
+
+- `./scripts/deploy-with-rollback.sh`: voert een deploy uit en rolt terug als health checks falen
+- `./scripts/auto-deploy-poll.sh`: checkt of `origin/main` een nieuwe commit heeft en start dan de deploy
+- `./scripts/systemd/cloud-groep-4-auto-deploy.service`
+- `./scripts/systemd/cloud-groep-4-auto-deploy.timer`
+
+De flow op de VM is:
+
+1. de timer draait elke minuut
+2. de poller doet `git fetch origin`
+3. bij een nieuwe commit start het rollback-deployscript
+4. dat script bouwt de stack opnieuw en controleert containers en HTTP endpoints
+5. bij een mislukte deploy schakelt het terug naar de vorige commit
+
+### Eenmalige VM-setup
+
+Clone de repo op de VM en maak de scripts uitvoerbaar:
+
+```bash
+cd /opt/cloud-computing-groep-4
+chmod +x ./scripts/deploy-with-rollback.sh
+chmod +x ./scripts/auto-deploy-poll.sh
+```
+
+Installeer daarna de `systemd` units:
+
+```bash
+sudo cp ./scripts/systemd/cloud-groep-4-auto-deploy.service /etc/systemd/system/
+sudo cp ./scripts/systemd/cloud-groep-4-auto-deploy.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now cloud-groep-4-auto-deploy.timer
+```
+
+Controle:
+
+```bash
+systemctl status cloud-groep-4-auto-deploy.timer --no-pager
+journalctl -u cloud-groep-4-auto-deploy.service -n 50 --no-pager
+```
+
+### Pad aanpassen indien nodig
+
+De voorbeeld-`systemd` files gebruiken `/opt/cloud-computing-groep-4` als projectmap. Pas dat aan als jullie repo op de VM ergens anders staat, bijvoorbeeld `/root/Cloud-computing-groep-4`.
+
+### Belangrijke nuance
+
+De rollback dekt een mislukte of ongezonde deploy. Bij een echte security-compromise moet je daarnaast ook secrets roteren en de VM zelf onderzoeken.
+
 ## Secrets configureren
 
 Echte wachtwoorden en tokens horen niet in Git. Gebruik daarom een lokale `.env`:
