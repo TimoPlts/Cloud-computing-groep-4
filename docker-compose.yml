@@ -1,4 +1,14 @@
 services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:ro
+    networks:
+      - cloudnet
+
   influxdb:
     image: influxdb:2.7
     restart: unless-stopped
@@ -10,7 +20,7 @@ services:
       DOCKER_INFLUXDB_INIT_PASSWORD: bomba888
       DOCKER_INFLUXDB_INIT_ORG: groep4
       DOCKER_INFLUXDB_INIT_BUCKET: sensordata
-      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN:-mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==}
     volumes:
       - influxdb-data:/var/lib/influxdb2
     networks:
@@ -51,11 +61,12 @@ services:
     restart: unless-stopped
     ports:
       - "1880:1880"
+    environment:
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN:-mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==}
     volumes:
       - nodered-data:/data
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
+      - mosquitto
       - influxdb
     networks:
       - cloudnet
@@ -64,10 +75,10 @@ services:
     build: ./sensor-sim
     restart: unless-stopped
     environment:
-      MQTT_HOST: host.docker.internal
+      MQTT_HOST: mosquitto
       MQTT_PORT: 1883
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mosquitto
     networks:
       - cloudnet
 
