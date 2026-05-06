@@ -19,11 +19,30 @@ Start de stack:
 docker compose up -d --build
 ```
 
+Voor je de stack start, maak eerst een lokale `.env` op basis van `.env.example` en vul je eigen secrets in.
+
 Heruitrollen via het deployscript:
 
 ```bash
 ./scripts/deploy.sh
 ```
+
+## Secrets configureren
+
+Echte wachtwoorden en tokens horen niet in Git. Gebruik daarom een lokale `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Vul daarna minstens deze variabelen in:
+
+- `INFLUXDB_ADMIN_PASSWORD`
+- `INFLUXDB_ADMIN_TOKEN`
+- `GRAFANA_ADMIN_PASSWORD`
+- `NODE_RED_CREDENTIAL_SECRET`
+
+De `.env` blijft lokaal en wordt niet gecommit.
 
 ## Bonus: Volume backup script
 
