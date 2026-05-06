@@ -1,0 +1,13 @@
+[Unit]
+Description=Cloud Groep 4 auto-deploy check
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/cloud-computing-groep-4
+Environment=PROJECT_DIR=/opt/cloud-computing-groep-4
+Environment=DEPLOY_REF=origin/main
+ExecStart=/opt/cloud-computing-groep-4/scripts/auto-deploy-poll.sh
+

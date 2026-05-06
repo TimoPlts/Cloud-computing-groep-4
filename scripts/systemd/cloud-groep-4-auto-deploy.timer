@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Cloud Groep 4 auto-deploy check every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+Unit=cloud-groep-4-auto-deploy.service
+
+[Install]
+WantedBy=timers.target
