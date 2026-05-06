@@ -9,8 +9,8 @@ datasources:
     isDefault: true
     jsonData:
       version: Flux
-      organization: groep4
-      defaultBucket: sensordata
+      organization: ${INFLUXDB_ORG}
+      defaultBucket: ${INFLUXDB_BUCKET}
       tlsSkipVerify: true
     secureJsonData:
-      token: mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==
+      token: ${INFLUXDB_ADMIN_TOKEN}
