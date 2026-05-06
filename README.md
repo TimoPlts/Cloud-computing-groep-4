@@ -81,3 +81,28 @@ Wat als je hier ook een andere opslag map wil?:
 ```bash
 ./scripts/backup-volumes.sh --output-dir backups-demo
 ```
+
+## Discord notificaties voor containerproblemen
+
+De stack bevat nu ook een kleine monitorcontainer die de kritieke services controleert en bij een probleem een bericht naar Discord stuurt via een webhook.
+
+Zet de webhook eerst als environment variable in je shell of in een lokale `.env`-file:
+
+```bash
+DISCORD_WEBHOOK_URL=je-discord-webhook-hier
+```
+
+Daarna start je de stack opnieuw:
+
+```bash
+docker compose up -d --build
+```
+
+De monitor kijkt standaard naar:
+
+- InfluxDB
+- Grafana
+- Portainer
+- Node-RED
+- Mosquitto
+- sensor-sim

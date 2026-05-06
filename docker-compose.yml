@@ -73,12 +73,35 @@ services:
 
   sensor-sim:
     build: ./sensor-sim
+    container_name: sensor-sim
     restart: unless-stopped
     environment:
       MQTT_HOST: mosquitto
       MQTT_PORT: 1883
     depends_on:
       - mosquitto
+    networks:
+      - cloudnet
+
+  discord-monitor:
+    build: ./monitor
+    restart: unless-stopped
+    environment:
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+      MONITOR_INTERVAL: ${MONITOR_INTERVAL:-60}
+      MONITOR_STARTUP_DELAY: ${MONITOR_STARTUP_DELAY:-60}
+      MONITOR_TARGETS: ${MONITOR_TARGETS:-influxdb grafana portainer nodered mosquitto sensor-sim}
+      STATE_DIR: /state
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - discord-monitor-state:/state
+    depends_on:
+      - mosquitto
+      - influxdb
+      - portainer
+      - grafana
+      - nodered
+      - sensor-sim
     networks:
       - cloudnet
 
@@ -91,3 +114,4 @@ volumes:
   nodered-data:
   portainer_data:
   grafana-data:
+  discord-monitor-state:
