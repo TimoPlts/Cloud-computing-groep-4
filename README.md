@@ -19,7 +19,7 @@ Start de stack:
 docker compose up -d --build
 ```
 
-Voor je de stack start, maak eerst een lokale `.env` op basis van `.env.example` en vul je eigen secrets in.
+De repo bevat al een werkende `.env`, zodat de stack op de evaluatie-machine direct met `docker compose up` kan starten.
 
 Heruitrollen via het deployscript:
 
@@ -27,22 +27,19 @@ Heruitrollen via het deployscript:
 ./scripts/deploy.sh
 ```
 
-## Secrets configureren
+## Inloggegevens
 
-Echte wachtwoorden en tokens horen niet in Git. Gebruik daarom een lokale `.env`:
+De inloggegevens staan in `.env`, zodat alles tijdens de evaluatie direct bruikbaar is.
 
-```bash
-cp .env.example .env
-```
+- Grafana: `admin` / zie `GRAFANA_ADMIN_PASSWORD`
+- Portainer: `admin` / `cloudgroep4!`
+- InfluxDB: `admin` / zie `INFLUXDB_ADMIN_PASSWORD`
 
-Vul daarna minstens deze variabelen in:
+## Portainer
 
-- `INFLUXDB_ADMIN_PASSWORD`
-- `INFLUXDB_ADMIN_TOKEN`
-- `GRAFANA_ADMIN_PASSWORD`
-- `NODE_RED_CREDENTIAL_SECRET`
+Portainer toont `#!/init/admin` alleen als er nog geen admin-user in `portainer_data` bestaat. Deze compose-config geeft daarom bij de eerste start automatisch een vaste bcrypt-hash mee voor de `admin`-gebruiker. Op een lege VM zou je dus meteen de loginpagina moeten krijgen.
 
-De `.env` blijft lokaal en wordt niet gecommit.
+Bestaat `portainer_data` al van een vorige mislukte of handmatige setup, dan moet je die volume eerst verwijderen en Portainer opnieuw starten.
 
 ## Bonus: Volume backup script
 
