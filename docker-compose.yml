@@ -67,6 +67,8 @@ services:
     restart: unless-stopped
     ports:
       - "1880:1880"
+    environment:
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN:-mF0B9oNC8xw5l1o_yw3asTWLtIhmGmk2WdJHioLG627A1IqmsgXnZuc7GmNgzzMMplAry7O8EzUFVL9EdKyalQ==}
     volumes:
       - nodered-data:/data
     depends_on:
