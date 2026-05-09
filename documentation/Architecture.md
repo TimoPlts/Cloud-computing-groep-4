@@ -76,14 +76,3 @@ This makes the data pipeline visible from raw input to final dashboard output.
 The full stack is started through one `docker-compose.yml` file. This means the infrastructure is defined as code and can be redeployed consistently on another machine, such as the course VM.
 
 The project also includes deployment scripts and a small CI workflow, which makes the architecture easier to update and maintain.
-
-## Conclusion
-
-The architecture is modular and easy to understand. Each service has one clear role, and the system demonstrates the required cloud concepts:
-
-- MQTT communication
-- containerized services
-- data validation and processing
-- time-series storage
-- dashboard visualization
-- management and monitoring

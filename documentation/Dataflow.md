@@ -121,15 +121,3 @@ InfluxDB
 Grafana
   -> visualizes live and aggregated values
 ```
-
-## Why This Flow Is Important
-
-This data flow demonstrates the main technical goals of the assignment:
-
-- MQTT-based communication
-- message processing in Node-RED
-- filtering of incorrect measurements
-- storage in a time-series database
-- dashboard-based visualization
-
-Because invalid messages are removed before storage, the final dashboard only shows trusted data.
