@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The `sensor-sim` service simulates a physical controller by publishing test data to the MQTT broker. This makes it possible to demonstrate the complete gateway pipeline without needing real hardware. It is especially useful during development, testing, and classroom demos.
+The `sensor-sim` service simulates a physical controller by publishing test data to the MQTT broker. This makes it possible to demonstrate the complete gateway pipeline without needing real hardware.
 
 ## Implementation
 
@@ -59,14 +59,3 @@ The script:
 
 The implementation uses `mqtt.CallbackAPIVersion.VERSION2`, which matches the newer `paho-mqtt` API.
 
-## Why This Script Matters
-
-Without this simulator, the rest of the platform would still exist, but there would be no continuous data source to test the pipeline. The script allows the team to validate:
-
-- MQTT communication
-- Node-RED subscriptions
-- validation logic
-- InfluxDB storage
-- Grafana visualizations
-
-In other words, it provides the input that drives the whole demo environment.
