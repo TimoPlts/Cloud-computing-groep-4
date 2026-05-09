@@ -29,6 +29,9 @@ http://localhost:9000
 ```
 
 When the stack is deployed on the VM, the same interface can be reached through the VM IP address on port `9000`.
+```text
+http://10.20.1.37:9000
+```
 
 ## Role in the Architecture
 
@@ -42,29 +45,6 @@ It is useful for:
 - restarting or troubleshooting containers when needed
 
 This makes it a complementary tool beside Grafana. Grafana shows the sensor data, while Portainer shows the health and structure of the container platform.
-
-## Why Portainer Was Included
-
-Portainer directly supports one of the assignment requirements: central management of the containerized environment.
-
-It is a good fit for this project because:
-
-- it is easy to deploy in Docker Compose
-- it gives a clear visual overview during a demo
-- it reduces the need to manage everything only through the command line
-
-For a student project, this adds practical value without making the architecture unnecessarily complex.
-
-## Security Notes
-
-Portainer is powerful because it has access to the Docker socket. That also means it should be treated carefully. Anyone with access to Portainer can potentially manage containers on the host.
-
-In this project, Portainer is acceptable as a local management tool, but in a production setup it would require:
-
-- stronger access control
-- HTTPS
-- restricted network exposure
-- more careful secret handling
 
 ## Conclusion
 
