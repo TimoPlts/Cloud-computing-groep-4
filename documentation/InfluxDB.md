@@ -4,6 +4,10 @@
 
 InfluxDB is the time-series database used to store the validated sensor data. It is responsible for keeping the joystick and button measurements in a format that is efficient for time-based queries, dashboards, and averaging over different time ranges.
 
+InfluxDB is not the main dashboard of this project. It is the storage and query layer between Node-RED and Grafana. The final visual dashboard for users is built in Grafana.
+
+InfluxDB is a good match because this project continuously generates timestamped values.
+
 ## Implementation
 
 The `influxdb` service runs the official `influxdb:2.7` image. It is configured directly in `docker-compose.yml` through environment variables so the database is initialized automatically when the container starts.
@@ -39,20 +43,19 @@ The `button` measurement contains:
 
 Only validated data is stored. Invalid measurements are filtered out in Node-RED before they ever reach the database.
 
-## Why InfluxDB Fits This Project
 
-InfluxDB is a good match because this project continuously generates timestamped values. A traditional relational database would work, but a time-series database is better suited for:
-
-- storing large sequences of sensor values
-- querying recent measurements
-- calculating averages over time windows
-- integrating with Grafana
 
 ## Integration with Grafana
 
-Grafana connects to InfluxDB through a provisioned data source. The data source uses Flux queries to retrieve both live data and averages over `1h` and `24h` periods.
+Grafana connects to InfluxDB through a provisioned data source. 
 
-This means InfluxDB is not only used as storage, but also as the source for analytics and visualization.
+This means InfluxDB acts as the data source for analytics, while Grafana is responsible for the actual visualization. The intended flow is:
+
+```text
+Node-RED -> InfluxDB -> Grafana
+```
+
+In practice, InfluxDB is used as an intermediate step: it stores clean time-series measurements and makes them queryable, so Grafana can show live values and calculated averages in a clearer dashboard.
 
 ## Availability
 
