@@ -28,28 +28,17 @@ The simulator publishes to at least two MQTT topics, which matches the project r
 - `controller/joystick`
 - `controller/button`
 
-These topics represent two different kinds of controller input. Node-RED subscribes to both topics and processes them separately.
+Node-RED subscribes to both topics and processes them separately.
 
 ## Role in the Architecture
 
-The broker is responsible only for message transport. It does not validate or store the sensor values. Its job is to decouple the producer from the consumer:
+The broker is responsible only for message transport. It does not validate or store the sensor values.
 
 1. `sensor-sim` publishes JSON payloads to Mosquitto.
 2. Node-RED subscribes to the relevant topics.
 3. Node-RED validates and transforms the data before storing it in InfluxDB.
 
-This design is useful because the producer and consumer do not need to know each other's internal implementation.
 
-## Why MQTT Was Chosen
-
-MQTT fits this project well because it is:
-
-- lightweight
-- event-driven
-- common in IoT and industrial monitoring
-- easy to integrate with Node-RED and Python
-
-It is especially useful for a gateway architecture where multiple devices may publish data to a central local service.
 
 ## Limitations and Security Notes
 
@@ -59,4 +48,3 @@ The current broker configuration is intentionally simple for a student lab envir
 - no username/password authentication is configured
 - no TLS encryption is used
 
-For a production deployment, the broker should use authentication, access control, and encrypted transport.
