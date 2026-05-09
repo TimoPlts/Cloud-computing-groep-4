@@ -37,6 +37,29 @@ discord-monitor controleert de services en kan alerts naar Discord sturen.
 | Portainer | Beheer en status van containers | `http://localhost:9000` |
 | discord-monitor | Eenvoudige servicebewaking met Discord alerts | intern |
 
+## Info voor leerkracht
+
+De stack staat gedeployed op de VM:
+
+```text
+10.20.1.37
+```
+
+Belangrijke URLs:
+
+| Component | URL |
+| --- | --- |
+| Node-RED | `http://10.20.1.37:1880` |
+| InfluxDB | `http://10.20.1.37:8086` |
+| Grafana | `http://10.20.1.37:3000` |
+| Portainer | `http://10.20.1.37:9000` |
+
+Discord server invite voor de monitorbot:
+
+```text
+nog geen link, WIP
+```
+
 ## Dataflow
 
 De simulator publiceert elke seconde data naar Mosquitto.
