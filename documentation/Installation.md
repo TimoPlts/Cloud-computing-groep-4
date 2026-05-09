@@ -12,11 +12,6 @@ Before starting the project, the following software must be installed:
 - Docker Compose
 - Git
 
-For the automatic deployment scripts on a Linux VM, the following tools are also needed:
-
-- `curl`
-- `systemd`
-
 ## Project Files
 
 The most important deployment files are:
@@ -24,8 +19,8 @@ The most important deployment files are:
 - `docker-compose.yml`
 - `.env`
 - `scripts/deploy.sh`
-- `scripts/deploy-with-rollback.sh`
-- `scripts/auto-deploy-poll.sh`
+
+The automatic VM deployment, polling setup, and rollback flow are documented separately in [CICD.md](./CICD.md).
 
 ## Environment Configuration
 
@@ -92,17 +87,13 @@ The `sensor-sim` and `discord-monitor` services run internally and do not expose
 
 ## Linux VM Deployment
 
-The stack can also be deployed on a Linux VM. A typical setup is:
+The stack can also be deployed on a Linux VM with the same Docker Compose command:
 
 ```bash
-sudo mkdir -p /opt/cloud-computing-groep-4
-sudo chown "$USER":"$USER" /opt/cloud-computing-groep-4
-git clone <repo-url> /opt/cloud-computing-groep-4
-cd /opt/cloud-computing-groep-4
 docker compose up -d --build
 ```
 
-From that point, the services are reachable through the VM IP address on the same ports as the local deployment.
+**For the full VM setup with automatic polling, systemd and rollback, see [CICD.md](./CICD.md).**
 
 ## Manual Redeployment
 
@@ -118,19 +109,6 @@ This script:
 2. stops the current stack
 3. starts the updated stack again
 
-## Automatic Deployment on the VM
-
-For automatic polling and deployment, copy the systemd files and enable the timer:
-
-```bash
-sudo cp ./scripts/systemd/cloud-groep-4-auto-deploy.service /etc/systemd/system/
-sudo cp ./scripts/systemd/cloud-groep-4-auto-deploy.timer /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now cloud-groep-4-auto-deploy.timer
-```
-
-The timer checks for updates every minute. If a new commit is found on `origin/main`, the project can be redeployed automatically through `scripts/auto-deploy-poll.sh`.
-
 ## Verification
 
 After deployment, the system can be verified in several ways:
@@ -141,6 +119,4 @@ After deployment, the system can be verified in several ways:
 - open Portainer and confirm that the containers are healthy
 - inspect logs if a service does not start correctly
 
-## Conclusion
 
-Because the whole platform is defined in Docker Compose, deployment is reproducible and easy to repeat. This is one of the main strengths of the project architecture.
