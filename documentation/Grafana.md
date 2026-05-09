@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Grafana is the visualization layer of the project. It reads the stored sensor data from InfluxDB and presents it in a dashboard that shows both live values and averages over time. This satisfies the project requirement to visualize joystick and button measurements in a clear way.
+Grafana is the visualization layer of the project. It reads the stored sensor data from InfluxDB and presents it in a dashboard that shows both live values and averages over time.
 
 ## Implementation
 
@@ -68,12 +68,6 @@ http://localhost:3000
 ```
 
 Inside the VM deployment, the same port can be accessed through the VM IP address.
-
-## Limitations
-
-The current setup is suitable for a school project, but a production version would usually add:
-
-- stronger account management
-- HTTPS
-- role-based access control
-- alert rules inside Grafana itself
+```text
+http://10.20.1.37:3000
+```
