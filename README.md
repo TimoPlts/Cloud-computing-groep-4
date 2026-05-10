@@ -57,7 +57,7 @@ Belangrijke URLs:
 Discord server invite voor de monitorbot:
 
 ```text
-nog geen link, WIP
+https://discord.gg/ADnVwJ7mJK
 ```
 
 ## Dataflow
