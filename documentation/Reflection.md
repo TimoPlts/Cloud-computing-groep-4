@@ -14,6 +14,16 @@ Besides these main parts, I also helped with general integration, Docker Compose
 
 ## Thorben
 
+I mainly worked on Node-RED flows, the Discord monitoring integration, and backup automation.
+
+For Node-RED I implemented and tested flows that process incoming sensor messages and forward them to InfluxDB(i helped with Michiel for that), paying attention to message formats and simple validation so the pipeline stays reliable.
+
+For Discord I set up webhook-based notifications so the team receives alerts for important events; I verified end-to-end delivery and adjusted messages to include useful context.
+
+For backups I prepared and tested our backup scripts (see `scripts/backup-volumes.sh`) to ensure Docker volumes and configuration can be regularly saved and restored. I ran restore checks to confirm data recovery works.
+
+These contributions were focused on operational stability: keeping data flowing, alerting the team, and ensuring recoverability.
+
 ## Timo
 
 I mainly worked on Grafana and Portainer in this project.
