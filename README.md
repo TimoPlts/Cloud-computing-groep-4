@@ -93,14 +93,3 @@ Portainer manages the containers. The Discord monitor checks the services and ca
 | [Backup script](documentation/Backup-script.md) | Docker volume backups |
 | [Reflection](documentation/Reflection.md) | Team reflection and task division |
 
-## Assignment Checklist
-
-- MQTT communication with at least two topics
-- Node-RED processing with custom function nodes
-- Validation before storing data
-- InfluxDB time-series storage
-- Grafana dashboard with live values and averages
-- Docker Compose stack with internal network
-- Portainer for management
-- CI/CD deploy script and automatic VM deployment flow
-- Bonus: Discord monitoring and volume backup script
