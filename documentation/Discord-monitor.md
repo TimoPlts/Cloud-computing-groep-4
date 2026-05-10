@@ -45,7 +45,7 @@ This shows that the monitor does not only test whether a container exists, but w
 
 The script stores the last known state of every monitored service in the directory defined by `STATE_DIR`. In Docker Compose, this directory is backed by the named volume `discord-monitor-state`.
 
-Because of this, the monitor remembers the previous state even after the container restarts. It only sends a Discord message when the state changes, which avoids sending the same alert over and over again during normal operation.
+This persistent storage ensures the monitor remembers previous states even after restart. It only sends a Discord message when a state changes, avoiding redundant alerts during normal operation.
 
 ## Configuration
 
@@ -57,7 +57,7 @@ Important environment variables:
 - `MONITOR_TARGETS`
 - `STATE_DIR`
 
-The webhook URL is required. If it is not set, the script exits immediately. This is important because the compose file contains an empty default value, but the script itself enforces that the variable must be present for the monitor to run correctly.
+The webhook URL is required—without it, the script exits immediately. Although the compose file provides an empty default, the script enforces this requirement.
 
 ## Why It Is Useful
 
@@ -67,4 +67,4 @@ This monitor adds operational value to the stack:
 - it confirms when a service recovers
 - it demonstrates basic service monitoring and alerting
 
-For a student project, this is a practical way to show that the system is not only built, but also observed.
+For a student project, this demonstrates that the system is not only built, but actively monitored.

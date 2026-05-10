@@ -285,3 +285,22 @@ Andere outputmap:
 ```bash
 ./scripts/backup-volumes.sh --output-dir backups-demo
 ```
+
+
+## Documentatie
+
+Beschikbare aanvullende documentatie (engels):
+
+- [Architecture](documentation/Architecture.md) — systeemarchitectuur en componentrelaties
+- [Dataflow](documentation/Dataflow.md) — MQTT topics en datastromen
+- [Node-RED](documentation/Node-RED.md) — flowlogica en validatie
+- [InfluxDB](documentation/InfluxDB.md) — bucket/organisatie en opslagdetails
+- [Grafana](documentation/Grafana.md) — dashboard provisioning
+- [Portainer](documentation/Portainer.md) — beheer en persistentie
+- [MQTT-broker](documentation/MQTT-broker.md) — Mosquitto configuratie
+- [Sensor simulator](documentation/Sensor-sim-script.md) — sensor-sim script uitleg
+- [Discord monitor](documentation/Discord-monitor.md) — monitoring en alerts
+- [CI/CD](documentation/CICD.md) — automatische deploy en rollback
+- [Backup script](documentation/Backup-script.md) — backup and restore examples (EN)
+- [Reflection](documentation/Reflection.md) — projectreflectie en samenwerking
+
